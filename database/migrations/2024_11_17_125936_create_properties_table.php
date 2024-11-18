@@ -14,16 +14,16 @@ return new class extends Migration
         Schema::create('properties', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->text('description');
+            // $table->text('description');
             $table->enum('type', ['house','apartment','land','commercial']);
             $table->enum('status', ['available','sold','rented']);
-            $table->integer('bedroom');
-            $table->integer('bathrooms');
-            $table->decimal('size');
-            $table->unsignedBigInteger('owner_id');
-            $table->unsignedBigInteger('agent_id');
-            $table->foreign('owner_id')->references('id')->on('users')->onDelete('restrict');
-            $table->foreign('agent_id')->references('id')->on('users')->onDelete('restrict');
+            // $table->integer('bedroom');
+            // $table->integer('bathrooms');
+            // $table->decimal('size');
+            // $table->unsignedBigInteger('owner_id');
+            // $table->unsignedBigInteger('agent_id');
+            // $table->foreign('owner_id')->references('id')->on('users')->onDelete('restrict');
+            // $table->foreign('agent_id')->references('id')->on('users')->onDelete('restrict');
             $table->timestamps();
         });
     }
