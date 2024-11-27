@@ -15,20 +15,7 @@
             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
-
-        <div class="mt-4">
-            <x-input-label for="role" :value="__('Role')" />
-            <select name="role" id="role" class = 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full' >
-                @if (!App\Models\User::where('role','admin')->first())
-                    <option value="admin">Administrator</option>
-                @endif
-                
-                <option value="agent">Agent</option>
-                <option value="owner">Owner</option>
-                <option value="client">Client</option>
-            </select>
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+        
 
         <!-- Password -->
         <div class="mt-4">

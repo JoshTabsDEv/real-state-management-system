@@ -9,7 +9,14 @@ use App\Models\Appointment;
 
 class DashboardController extends Controller
 {
+    public function index1(){
+        
+        return view("admin.appointments.index");
+    }
     public function index(){
+        $appointment = Appointment::where('id',auth()->user()->id)
+                                    ->with('owner')
+                                    ->first();
         $stats = [
             'total_users' => User::count(),
             'total_properties' => Property::count(),

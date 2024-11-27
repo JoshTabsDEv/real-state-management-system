@@ -14,16 +14,22 @@ return new class extends Migration
         Schema::create('properties', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            // $table->text('description');
+            $table->decimal('price');
+            $table->text('description');
             $table->enum('type', ['house','apartment','land','commercial']);
             $table->enum('status', ['available','sold','rented']);
-            // $table->integer('bedroom');
-            // $table->integer('bathrooms');
-            // $table->decimal('size');
-            // $table->unsignedBigInteger('owner_id');
-            // $table->unsignedBigInteger('agent_id');
-            // $table->foreign('owner_id')->references('id')->on('users')->onDelete('restrict');
-            // $table->foreign('agent_id')->references('id')->on('users')->onDelete('restrict');
+            $table->integer('bedroom');
+            $table->integer('bathrooms');
+            $table->string('street', 255); // Street address, required, max 255 characters
+            $table->string('city', 255); // City, required, max 255 characters
+            $table->string('state', 255)->nullable(); // State, nullable, max 255 characters
+            $table->string('postal_code', 20)->nullable(); // Postal code, nullable, max 20 characters
+            $table->string('country', 255); // Country, required, max 255 characters
+            $table->decimal('size');
+            $table->unsignedBigInteger('owner_id');
+            $table->unsignedBigInteger('agent_id')->nullable();
+            $table->foreign('owner_id')->references('id')->on('users')->onDelete('restrict');
+            $table->foreign('agent_id')->references('id')->on('users')->onDelete('set null');
             $table->timestamps();
         });
     }

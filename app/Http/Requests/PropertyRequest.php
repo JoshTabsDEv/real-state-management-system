@@ -16,15 +16,20 @@ class PropertyRequest extends FormRequest
     {
         return [
             'title' => 'required|string|max:255',
-            // 'description' => 'required|string',
-            // 'price' => 'required|numeric|min:0',
-            // 'address' => 'required|string',
+            'description' => 'required|string',
+            'price' => 'required|numeric|min:0',
+            'street' => 'required|string|max:255',
+            'city' => 'required|string|max:255',
+            'state' => 'nullable|string|max:255',
+            'postal_code' => 'nullable|string|max:20',
+            'country' => 'required|string|max:255',
             'type' => 'required|in:house,apartment,land,commercial',
             'status' => 'required|in:available,sold,rented',
-            // 'bedrooms' => 'required|integer|min:0',
-            // 'bathrooms' => 'required|integer|min:0',
-            // 'size' => 'required|numeric|min:0',
-            // 'owner_id' => 'required|exists:users,id',
+            'bedroom' => 'required|integer|min:0',
+            'bathrooms' => 'required|integer|min:0',
+            'size' => 'required|numeric|min:0',
+            // 'is_published' => 'string',
+            'owner_id' => 'required|exists:users,id',
             // 'agent_id' => 'required|exists:users,id',
             'images.*' => 'image|mimes:jpeg,png,jpg|'
         ];
