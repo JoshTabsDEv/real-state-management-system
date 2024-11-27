@@ -11,7 +11,7 @@ class PropertyRequest extends FormRequest
     {
         return true;
     }
-
+    // dionar
     public function rules()
     {
         return [
