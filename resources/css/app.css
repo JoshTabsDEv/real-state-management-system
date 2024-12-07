@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+body {
+    font-family: 'Geist', sans-serif;
+}
+
+:focus {
+    outline: none !important;
+}
+
+

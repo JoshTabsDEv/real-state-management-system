@@ -15,8 +15,6 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('appointment_id');
             $table->text('note');
-           
-
             $table->foreign('appointment_id')->references('id')->on('appointments')->onDelete('restrict');
         });
     }

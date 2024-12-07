@@ -2,8 +2,11 @@
 
 use App\Http\Controllers\Admin\AgentController;
 use App\Http\Controllers\Admin\PropertyController;
+use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
+use App\Livewire\EditProperty;
+use App\Livewire\ScheduleAppointment;
 use App\Models\AgentApplication;
 use Illuminate\Support\Facades\Route;
 
@@ -11,35 +14,67 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::prefix('admin')->name('admin.')->group(function () {
-    Route::resource('properties', PropertyController::class);
 
-    Route::get('/appointment', [DashboardController::class,'index1'])->name('appointment.index');
 
-   
+Route::middleware(['auth'])->group(function () {
+    Route::middleware(['role:admin'])->prefix('admin')->name('admin.')->group(function () {
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('main-dashboard');
+        Route::post('/agent/approve/{applicationId}', [AgentController::class, 'approveApplication'])->name('agent.approve');
 
-    Route::delete('property-images/{propertyImage}', [PropertyController::class, 'deleteImage'])
-    ->name('admin.property-images.destroy');
+        Route::post('/agent/reject/{applicationId}', [AgentController::class, 'rejectApplication'])->name('agent.reject');
 
-    Route::post('/agent/approve/{applicationId}', [AgentController::class,'approveApplication'])->name('agent.approve');
+        Route::get('/agent/applications', [AgentController::class, 'showAllApplications'])->name('agent.apply');
+        Route::get('/agents', [AgentController::class, 'index'])->name('agent.index');
 
-    Route::post('/agent/reject/{applicationId}', [AgentController::class,'rejectApplication'])->name('agent.reject');
+        Route::get('/properties', [PropertyController::class, 'index'])->name('property.index');
+        Route::post('/property/create', [PropertyController::class, 'store'])->name('property.create');
+        Route::get('/appointment', [AppointmentController::class, 'index'])->name('appointment.index');
 
-    Route::get('/agent/applications', [AgentController::class,'showAllApplications'])->name('agent.applications');
+        Route::delete('property-images/{propertyImage}', [PropertyController::class, 'deleteImage'])
+            ->name('admin.property-images.destroy');
+
+    });
+
+    Route::middleware(['role:agent'])->prefix('agent')->name('agent..')->group(function () {
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('main-dashboard');
+
+
+
+    });
+
+    Route::middleware(['role:client'])->name('client.')->group(function () {
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('main-dashboard');
+        Route::get('/list', [AgentController::class, 'index'])->name('list');
+        Route::get('/apply', [AgentController::class, 'showForm'])->name('apply');
+        Route::get('/home', function () {
+            return view('user.index');
+        })->name('index');
+
+        // Submit the agent application
+        Route::post('/apply', [AgentController::class, 'applyToBecomeAgent'])->name('apply.submit');
+
+        // Show application status
+        Route::get('/application-status', [AgentController::class, 'showApplicationStatus'])->name('application.status');
+
+    });
 });
 
+// Route::get('/home', function () {
+//     return view('user.index');
+// });
+
+Route::get('/properties/{id}/edit', EditProperty::class)->name('property.edit');
+Route::get('/properties/{id}/view', ScheduleAppointment::class)->name('property.edit');
 
 
-Route::get('/dashboard1', [DashboardController::class, 'index'])->name('admin.dashboard');
 
 
-    
 // Optional: Add a route for deleting individual property images
 
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -47,14 +82,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // Show agent application form
-    Route::get('agent/list', [AgentController::class, 'index'])->name('agent.list');
-    Route::get('agent/apply', [AgentController::class, 'showForm'])->name('agent.apply');
 
-    // Submit the agent application
-    Route::post('agent/apply', [AgentController::class, 'applyToBecomeAgent'])->name('apply.submit');
-
-    // Show application status
-    Route::get('agent/application-status', [AgentController::class, 'showApplicationStatus'])->name('agent.application.status');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

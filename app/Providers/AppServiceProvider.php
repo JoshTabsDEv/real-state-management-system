@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\View\Components\AppLayoutAdmin;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
 use App\View\Components\AdminDashboard;
@@ -22,6 +23,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //
+        
         Blade::component('admin-dashboard', AdminDashboard::class);
+        Blade::component('admin-app-layout', AppLayoutAdmin::class);
+    
     }
 }

@@ -19,6 +19,7 @@ class AgentController extends Controller
     }
     public function applyToBecomeAgent(Request $request)
     {
+       
         $request->validate([
             'agency_name' => 'nullable|string|max:255',
             'license_number' => 'nullable|string|max:255',
@@ -36,6 +37,7 @@ class AgentController extends Controller
             'experience' => $request->input('experience'),
             'is_approved' => false, // Default to not approved
         ]);
+        
     
         return redirect()->back()->with('success','Approval Pending');
     }

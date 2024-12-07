@@ -30,7 +30,7 @@ class PropertyRequest extends FormRequest
             'size' => 'required|numeric|min:0',
             // 'is_published' => 'string',
             'owner_id' => 'required|exists:users,id',
-            // 'agent_id' => 'required|exists:users,id',
+            'agent_id' => 'string',
             'images.*' => 'image|mimes:jpeg,png,jpg|'
         ];
     }

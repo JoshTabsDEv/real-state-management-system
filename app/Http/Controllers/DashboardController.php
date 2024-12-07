@@ -11,7 +11,7 @@ class DashboardController extends Controller
 {
     public function index1(){
         
-        return view("admin.appointments.index");
+        return view("admin.dashboard");
     }
     public function index(){
         $appointment = Appointment::where('id',auth()->user()->id)

@@ -43,12 +43,14 @@ class RegisteredUserController extends Controller
             'role'=> 'client',
         ]);
 
-        $user->assignRole($request->role);
+        $user->assignRole('admin');
 
         event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect(route('admin.dashboard', absolute: false));
+        
+
+        return redirect(route('client.index', absolute: false));
     }
 }
