@@ -48,8 +48,9 @@ class AppointmentTable extends Component
             ->orWhereHas('property', function($query) {
                 $query->where('title', 'like', '%' . $this->search . '%');
             })
-            ->orderBy($this->sortField, $this->sortDirection)
+            ->orderBy($this->sortField, $this->sortDirection)asdasedasdasdas
             ->paginate($this->perPage);
+            //comemts
 
         return view('livewire.appointment-table', [
             'appointments' => $appointments,
